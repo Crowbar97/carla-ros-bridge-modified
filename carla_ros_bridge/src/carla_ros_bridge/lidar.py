@@ -65,8 +65,10 @@ class Lidar(Sensor):
             PointField('intensity', 12, PointField.FLOAT32, 1),
         ]
 
-        lidar_data = numpy.fromstring(
-            carla_lidar_measurement.raw_data, dtype=numpy.float32)
+        lidar_data = numpy.fromstring( bytes(carla_lidar_measurement.raw_data), dtype=numpy.float32)
+
+        #lidar_data = numpy.fromstring(
+        #    carla_lidar_measurement.raw_data, dtype=numpy.float32)
         lidar_data = numpy.reshape(
             lidar_data, (int(lidar_data.shape[0] / 4), 4))
         # we take the oposite of y axis
@@ -123,7 +125,7 @@ class SemanticLidar(Sensor):
             PointField('ObjTag', 20, PointField.UINT32, 1),
         ]
 
-        lidar_data = numpy.fromstring(carla_lidar_measurement.raw_data,
+        lidar_data = numpy.fromstring(bytes(carla_lidar_measurement.raw_data),
                                       dtype=numpy.dtype([
                                           ('x', numpy.float32),
                                           ('y', numpy.float32),
